@@ -1,4 +1,5 @@
 import { Types } from "mongoose";
+import { USER_ROLE } from "./user";
 
 
 
@@ -16,4 +17,11 @@ export interface IComment {
     deletedAt?: Date;
     createdAt: Date;
     updatedAt: Date;
+}
+
+export interface CommentContext {
+    userId: string;
+    userRole: USER_ROLE;
+    postId: string;
+    commentId?: string;
 }

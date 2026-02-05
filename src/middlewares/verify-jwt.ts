@@ -16,7 +16,7 @@ export const verifyJWT = asyncHandler(async (req: Request, _res: Response, next:
     if (!currentUser) throw new ApiError(401, 'Unauthorized: Please log in to access this resource');
     req.user = {
         id: currentUser._id.toString(),
-        email: currentUser.email,
+        username: currentUser.username,
         fullName: currentUser.fullName,
         role: currentUser.role,
     }

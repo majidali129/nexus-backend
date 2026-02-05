@@ -24,7 +24,7 @@ export const updatePost = asyncHandler(async (req, res) => {
 
 export const deletePost = asyncHandler(async (req, res) => {
     const { status, message } = await postService.deletePost(getCtx(req))
-    return apiResponse(res, status, message);
+    return apiResponse(res, status, message, null);
 })
 
 export const getPostDetails = asyncHandler(async (req, res) => {

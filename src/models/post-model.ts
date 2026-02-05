@@ -1,7 +1,7 @@
 import mongoose, { HydratedDocument, Schema, model } from "mongoose";
 import { IPost, POST_TYPE, POST_VISIBILITY } from "../types/post";
 
-type PostDocument = HydratedDocument<IPost>;
+export type PostDocument = HydratedDocument<IPost>;
 
 const postSchema = new Schema<PostDocument>(
     {

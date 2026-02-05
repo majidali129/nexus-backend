@@ -32,6 +32,6 @@ export interface IUser {
 
 export interface UserContext {
     userId: string;
-    email: string;
-    token: string
+    username?: string;
+    userRole?: USER_ROLE;
 }

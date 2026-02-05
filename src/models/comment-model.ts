@@ -2,7 +2,7 @@ import { IComment } from "@/types/comment";
 import mongoose, { HydratedDocument, Schema, Types } from "mongoose";
 
 
-type CommentDocument = HydratedDocument<IComment>;
+export type CommentDocument = HydratedDocument<IComment>;
 
 const commentSchema = new Schema<CommentDocument>({
     content: {

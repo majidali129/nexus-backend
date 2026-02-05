@@ -1,5 +1,5 @@
 import { config } from "@/config/env";
-import { ForgotPasswordInput, ResetPasswordInput, SignInInput, SignUpInput, UpdatePasswordInput } from "@/schemas/auth";
+import { SignInInput, SignUpInput, UpdatePasswordInput } from "@/schemas/auth";
 import { authService } from "@/services/auth-service";
 import { UserContext } from "@/types/user";
 import { apiResponse } from "@/utils/api-response";
@@ -14,8 +14,8 @@ const setTokens = (res: Response, accessToken: string, refreshToken: string) => 
 
 const getCtx = (req: Request): UserContext => ({
     userId: req.user.id,
-    email: req.user.email,
-    token: req.query?.token as string
+    username: req.user.username,
+    userRole: req.user.role,
 })
 
 export const signUp = asyncHandler(async (req, res) => {
@@ -33,7 +33,7 @@ export const signIn = asyncHandler(async (req, res) => {
     setTokens(res, accessToken, refreshToken);
 
     // send response
-    return apiResponse(res, 200, 'Signed in successfully', { accessToken }) // for client use in SPA ( headers auth )
+    return apiResponse(res, 200, 'Signed in successfully', accessToken) // for client use in SPA ( headers auth )
 });
 
 export const signOut = asyncHandler(async (req, res) => {
@@ -52,7 +52,7 @@ export const updatePassword = asyncHandler(async (req, res) => {
 
 export const getCurrentUser = asyncHandler(async (req, res) => {
     const user = await authService.getCurrentUser(getCtx(req));
-    return apiResponse(res, 200, 'Current user fetched successfully', { user });
+    return apiResponse(res, 200, 'Current user fetched successfully', user);
 });
 
 export const refreshToken = asyncHandler(async (req, res) => {
@@ -61,7 +61,7 @@ export const refreshToken = asyncHandler(async (req, res) => {
 
     setTokens(res, accessToken, newRefreshToken);
 
-    return apiResponse(res, status, message);
+    return apiResponse(res, status, message, accessToken);
 
 })
 

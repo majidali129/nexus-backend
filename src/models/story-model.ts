@@ -2,7 +2,7 @@ import { IStory } from "@/types/story";
 import mongoose, { HydratedDocument, Schema, Types } from "mongoose";
 
 
-type StoryDocument = HydratedDocument<IStory>;
+export type StoryDocument = HydratedDocument<IStory>;
 
 const storySchema = new Schema<StoryDocument>({
     authorId: {

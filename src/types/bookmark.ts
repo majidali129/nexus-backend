@@ -8,3 +8,8 @@ export interface IBookmark {
     updatedAt: Date;
     createdAt: Date;
 }
+
+export interface BookmarkContext {
+    userId: string;
+    postId?: string;
+}
