@@ -13,6 +13,7 @@ export interface IStory {
     duration: number;
     viewers: Types.ObjectId[];
     viewsCount: number;
+    likesCount: number;
     expiresAt: number;
     createdAt: Date;
     updatedAt: Date;

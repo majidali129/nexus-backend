@@ -15,7 +15,7 @@ const postSchema = new Schema<PostDocument>(
         media: {
             type: String,
             trim: true,
-            default: null,
+            required: [true, "Media URL is required"],
         },
         type: {
             type: String,
@@ -68,6 +68,11 @@ const postSchema = new Schema<PostDocument>(
             type: Number,
             default: 0,
             min: [0, "Comments count cannot be negative"],
+        },
+        bookmarksCount: {
+            type: Number,
+            default: 0,
+            min: [0, "Bookmarks count cannot be negative"],
         },
         sharesCount: {
             type: Number,

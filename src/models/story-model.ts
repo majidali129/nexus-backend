@@ -36,6 +36,10 @@ const storySchema = new Schema<StoryDocument>({
         type: Number,
         default: 0
     },
+    likesCount: {
+        type: Number,
+        default: 0
+    },
     expiresAt: {
         type: Number,
         required: [true, 'Expiration time is required in milliseconds'],

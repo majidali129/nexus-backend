@@ -17,7 +17,7 @@ export type FEELING = 'happy' | 'sad' | 'angry' | 'excited' | 'neutral';
 
 export interface IPost {
     caption: string;
-    media?: string; // single file URL for now. Can be extended to array for multiple files
+    media: string; // single file URL for now. Can be extended to array for multiple files
     type: POST_TYPE;
     visibility: POST_VISIBILITY;
     authorId: Types.ObjectId;
@@ -26,6 +26,7 @@ export interface IPost {
     taggedUsers: Types.ObjectId[];
     likesCount: number;
     commentsCount: number;
+    bookmarksCount: number;
     sharesCount: number;
     viewsCount: number;
     isReported: boolean;
