@@ -32,7 +32,7 @@ export const signIn = asyncHandler(async (req, res) => {
     setTokens(res, accessToken, refreshToken);
 
     // send response
-    return apiResponse(res, 200, 'Signed in successfully', accessToken) // for client use in SPA ( headers auth )
+    return apiResponse(res, 200, 'Signed in successfully', { accessToken }) // for client use in SPA ( headers auth )
 });
 
 export const signOut = asyncHandler(async (req, res) => {
@@ -51,7 +51,7 @@ export const updatePassword = asyncHandler(async (req, res) => {
 
 export const getCurrentUser = asyncHandler(async (req, res) => {
     const user = await authService.getCurrentUser(getCtx(req));
-    return apiResponse(res, 200, 'Current user fetched successfully', user);
+    return apiResponse(res, 200, 'Current user fetched successfully', { user });
 });
 
 export const refreshToken = asyncHandler(async (req, res) => {
@@ -60,7 +60,7 @@ export const refreshToken = asyncHandler(async (req, res) => {
 
     setTokens(res, accessToken, newRefreshToken);
 
-    return apiResponse(res, status, message, accessToken);
+    return apiResponse(res, status, message, { accessToken });
 
 })
 

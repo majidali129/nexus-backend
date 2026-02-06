@@ -15,12 +15,12 @@ const getCtx = (req: Request): CommentContext => {
 
 export const createComment = asyncHandler(async (req, res) => {
     const { status, message, comment } = await commentService.createComment(getCtx(req), req.body);
-    return apiResponse(res, status, message, comment);
+    return apiResponse(res, status, message, { comment });
 })
 
 export const updateComment = asyncHandler(async (req, res) => {
     const { status, message, comment } = await commentService.updateComment(getCtx(req), req.body);
-    return apiResponse(res, status, message, comment);
+    return apiResponse(res, status, message, { comment });
 })
 
 export const deleteComment = asyncHandler(async (req, res) => {
@@ -28,9 +28,7 @@ export const deleteComment = asyncHandler(async (req, res) => {
     return apiResponse(res, status, message, null);
 })
 
-export const toggleLikeComment = asyncHandler(async (req, res) => { })
-
 export const getAllPostComments = asyncHandler(async (req, res) => {
     const { status, message, comments } = await commentService.getAllPostComments(getCtx(req));
-    return apiResponse(res, status, message, comments);
+    return apiResponse(res, status, message, { comments });
 })

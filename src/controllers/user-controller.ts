@@ -15,7 +15,7 @@ const getCtx = (req: Request): UserContext => {
 
 export const getUserProfile = asyncHandler(async (req, res) => {
     const { status, message, profile } = await userService.getUserProfile(getCtx(req));
-    return apiResponse(res, status, message, profile);
+    return apiResponse(res, status, message, { profile });
 })
 
 export const sendFollowRequest = asyncHandler(async (req, res) => {

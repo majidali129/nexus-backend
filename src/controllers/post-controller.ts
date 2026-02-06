@@ -13,13 +13,12 @@ const getCtx = (req: Request): PostContext => {
 
 export const createPost = asyncHandler(async (req, res) => {
     const { status, message, post } = await postService.createPost(getCtx(req), req.body)
-    return apiResponse(res, status, message, post);
+    return apiResponse(res, status, message, { post });
 })
 
 export const updatePost = asyncHandler(async (req, res) => {
     const { status, message, post } = await postService.updatePost(getCtx(req), req.body)
-    return apiResponse(res, status, message, post);
-
+    return apiResponse(res, status, message, { post });
 })
 
 export const deletePost = asyncHandler(async (req, res) => {
@@ -29,10 +28,10 @@ export const deletePost = asyncHandler(async (req, res) => {
 
 export const getPostDetails = asyncHandler(async (req, res) => {
     const { status, message, post } = await postService.getPostDetails(getCtx(req))
-    return apiResponse(res, status, message, post);
+    return apiResponse(res, status, message, { post });
 })
 
 export const getAllPosts = asyncHandler(async (req, res) => {
     const { status, message, posts } = await postService.getAllPosts();
-    return apiResponse(res, status, message, posts);
+    return apiResponse(res, status, message, { posts });
 })
