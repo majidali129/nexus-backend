@@ -2,6 +2,11 @@ import z from "zod";
 
 // Sign Up Schema
 export const signUpSchema = z.object({
+	username: z.string().refine(username => username.length > 0, { message: "Username is required" })
+		.min(3, "Username must be at least 3 characters")
+		.max(30, "Username cannot exceed 30 characters")
+		.regex(/^[a-zA-Z0-9_]+$/, "Username can only contain letters, numbers, and underscores")
+		.trim(),
 	fullName: z
 		.string().refine(fullName => fullName.length > 0, { message: "Full name is required" })
 		.min(2, "Full name must be at least 2 characters")

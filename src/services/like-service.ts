@@ -12,6 +12,9 @@ class LikeService {
         if (!ctx.resourceId) {
             throw new ApiError(400, "Resource ID is required");
         }
+        if (!ctx.resourceType) {
+            throw new ApiError(400, "Resource type is required");
+        }
         //! resource = post | comment | story
         let resourceModel: any;
 
@@ -110,7 +113,7 @@ class LikeService {
                     "user._id": 1,
                     "user.username": 1,
                     "user.fullName": 1,
-                    "user.profilePicture": 1,
+                    "user.profilePhoto": 1,
                     createdAt: 1
                 }
             }

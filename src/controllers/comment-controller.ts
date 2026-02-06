@@ -31,4 +31,9 @@ export const deleteComment = asyncHandler(async (req, res) => {
 export const getAllPostComments = asyncHandler(async (req, res) => {
     const { status, message, comments } = await commentService.getAllPostComments(getCtx(req));
     return apiResponse(res, status, message, { comments });
-})
+});
+
+export const getCommentReplies = asyncHandler(async (req, res) => {
+    const { status, message, comments } = await commentService.getCommentReplies(getCtx(req));
+    return apiResponse(res, status, message, { comments });
+});

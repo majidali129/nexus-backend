@@ -9,14 +9,15 @@ const getCtx = (req: Request): LikeContext => {
         userId: req.user.id,
         userRole: req.user.role,
         resourceId: req.params.resourceId as string,
-        resourceType: req.params.resourceType as ResourceType
+        resourceType: req.query.resourceType as ResourceType
     }
 }
 
 export const toggleLike = asyncHandler(async (req, res) => {
-    const { status, message } = await likeService.toggleLike(getCtx(req))
+    const { status, message } = await likeService.toggleLike(getCtx(req));
     return apiResponse(res, status, message, null);
 })
+
 export const getLikes = asyncHandler(async (req, res) => {
     const { status, message, likes } = await likeService.getLikes(getCtx(req));
     return apiResponse(res, status, message, { likes });

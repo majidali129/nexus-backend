@@ -1,8 +1,8 @@
 import { Router } from "express";
 import { authRouter } from "./auth-routes";
 import { postRouter } from "./post-routes";
-import { postCommentRouter } from "./post-comment-routes";
-import { postLikeRouter } from "./post-like-routes";
+import { commentRouter } from "./post-comment-routes";
+import { likeRouter } from "./like-routes";
 import { postBookmarkRouter } from "./post-bookmark-routes";
 import { notificationRouter } from "./notification-routes";
 import { storyRouter } from "./story-routes";
@@ -16,8 +16,8 @@ const router = Router()
 
 router.use('/auth', authRouter);
 router.use('/posts', postRouter)
-router.use('/comments', postCommentRouter);
-router.use('/likes', postLikeRouter);
+router.use('/comments', commentRouter);
+router.use('/likes', likeRouter);
 router.use('/bookmarks', postBookmarkRouter);
 router.use('/notification', notificationRouter);
 router.use('/stories', storyRouter);

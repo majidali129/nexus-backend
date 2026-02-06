@@ -1,0 +1,47 @@
+{
+    "account1": {
+        "username": "john_doe",
+        "fullName": "John Doe",
+        "email": "john@example.com",
+        "password": "SecurePass123",
+        "gender": "male",
+        "dateOfBirth": "1995-05-15",
+        "isPrivate": false
+    },
+    "account2": {
+        "username": "sarah_smith",
+        "fullName": "Sarah Smith",
+        "email": "sarah@example.com",
+        "password": "MyPassword456",
+        "gender": "female",
+        "dateOfBirth": "1998-08-22",
+        "isPrivate": true
+    },
+    "account3": {
+        "username": "alex_tech",
+        "fullName": "Alexander Johnson",
+        "email": "alex@example.com",
+        "password": "TechPass789",
+        "gender": "other",
+        "dateOfBirth": "2000-12-10",
+        "isPrivate": false
+    },
+    "account4": {
+        "username": "emma_wilson",
+        "fullName": "Emma Wilson",
+        "email": "emma@example.com",
+        "password": "EmmaPass321",
+        "gender": "female",
+        "dateOfBirth": "1997-03-18",
+        "isPrivate": false
+    },
+    "account5": {
+        "username": "michael_brown",
+        "fullName": "Michael Brown",
+        "email": "michael@example.com",
+        "password": "MikeSecure654",
+        "gender": "male",
+        "dateOfBirth": "1996-07-25",
+        "isPrivate": true
+    }
+}

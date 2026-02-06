@@ -4,13 +4,13 @@ import { validateBody } from "@/middlewares/validate-request";
 import { verifyJWT } from "@/middlewares/verify-jwt";
 import { createPostSchema, updatedPostSchema } from "@/schemas/post";
 import { Router } from "express";
-import { postCommentRouter } from "./post-comment-routes";
-import { postLikeRouter } from "./post-like-routes";
+import { commentRouter } from "./post-comment-routes";
+import { likeRouter } from "./like-routes";
 
 const router = Router()
 
-router.use('/:postId/comments', postCommentRouter)
-router.use('/:postId/likes', postLikeRouter);
+router.use('/:postId/comments', commentRouter)
+router.use('/:resourceId/likes', likeRouter);
 
 
 router.use(verifyJWT);

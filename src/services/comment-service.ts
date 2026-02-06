@@ -154,7 +154,7 @@ class CommentService {
                     editedAt: 1,
                     "author._id": 1,
                     "author.username": 1,
-                    "author.avatarUrl": 1,
+                    "author.profilePhoto": 1,
                     createdAt: 1,
                     updatedAt: 1
                 }
@@ -164,6 +164,52 @@ class CommentService {
         return {
             status: 200,
             message: "Comments fetched successfully",
+            comments
+        }
+    };
+
+    async getCommentReplies(ctx: CommentContext) {
+        const comments = await Comment.aggregate<IComment>([
+            {
+                $match: {
+                    parentCommentId: new Types.ObjectId(ctx.commentId),
+                    isDeleted: false
+                }
+            },
+            {
+                $lookup: {
+                    from: "users",
+                    localField: "authorId",
+                    foreignField: "_id",
+                    as: "author"
+                },
+            },
+            {
+                $unwind: "$author"
+            },
+            {
+                $sort: { createdAt: -1 }
+            },
+            {
+                $project: {
+                    content: 1,
+                    postId: 1,
+                    likesCount: 1,
+                    parentCommentId: 1,
+                    repliesCount: 1,
+                    isEdited: 1,
+                    editedAt: 1,
+                    "author._id": 1,
+                    "author.username": 1,
+                    "author.profilePhoto": 1,
+                    createdAt: 1,
+                }
+
+            }]).exec();
+
+        return {
+            status: 200,
+            message: "Replies fetched successfully",
             comments
         }
     }
