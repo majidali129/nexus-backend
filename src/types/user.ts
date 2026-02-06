@@ -31,7 +31,7 @@ export interface IUser {
 }
 
 export interface UserContext {
-    userId: string;
-    username?: string;
-    userRole?: USER_ROLE;
+    currentUserId: string;
+    currentUsername: string;
+    targetUsername?: string; // for target users profile
 }

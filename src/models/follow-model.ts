@@ -1,4 +1,4 @@
-import { IFollow } from "@/types/follow";
+import { FOLLOW_STATUS, IFollow } from "@/types/follow";
 import mongoose, { HydratedDocument, Schema, Types } from "mongoose";
 
 
@@ -20,10 +20,10 @@ const followSchema = new Schema<FollowDocument>({
     status: {
         type: String,
         enum: {
-            values: ['pending', 'accepted', 'blocked'],
-            message: '{VALUE} is not a valid follow status'
+            values: [FOLLOW_STATUS.PENDING, FOLLOW_STATUS.ACCEPTED, FOLLOW_STATUS.BLOCKED],
+            message: "Invalid follow status. It must be 'pending', 'accepted', or 'blocked'."
         },
-        default: 'pending',
+        default: FOLLOW_STATUS.PENDING
     }
 },
     { timestamps: true }

@@ -56,12 +56,12 @@ class AuthService {
     }
 
     async signOutUser(ctx: UserContext) {
-        await User.findByIdAndUpdate(ctx.userId, { $set: { refreshToken: null, lastSeen: new Date() } });
+        await User.findByIdAndUpdate(ctx.currentUserId, { $set: { refreshToken: null, lastSeen: new Date() } });
     }
 
     async updatePassword(ctx: UserContext, data: { currentPassword: string; newPassword: string }) {
         const { currentPassword, newPassword } = data;
-        const user = await User.findById(ctx.userId).select('+password').exec();
+        const user = await User.findById(ctx.currentUserId).select('+password').exec();
         if (!user) throw new ApiError(404, 'User not found');
 
         const isPasswordMatch = await bcrypt.compare(currentPassword, user.password);
@@ -78,7 +78,7 @@ class AuthService {
         }
     }
     async getCurrentUser(ctx: UserContext) {
-        const user = await User.findById(ctx.userId).select('_id role fullName email profilePhoto').lean().exec();
+        const user = await User.findById(ctx.currentUserId).select('_id role fullName email profilePhoto').lean().exec();
         if (!user) throw new ApiError(404, 'User not found');
         return user;
     }

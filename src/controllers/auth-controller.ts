@@ -13,9 +13,8 @@ const setTokens = (res: Response, accessToken: string, refreshToken: string) => 
 
 
 const getCtx = (req: Request): UserContext => ({
-    userId: req.user.id,
-    username: req.user.username,
-    userRole: req.user.role,
+    currentUserId: req.user.id,
+    currentUsername: req.user.username,
 })
 
 export const signUp = asyncHandler(async (req, res) => {

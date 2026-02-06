@@ -1,10 +1,16 @@
 import { Types } from "mongoose";
 
-export type FOLLOW_STATUS = 'pending' | 'accepted' | 'blocked';
+// 'pending' | 'accepted' | 'blocked';
+
+export enum FOLLOW_STATUS {
+    PENDING = 'pending',
+    ACCEPTED = 'accepted',
+    BLOCKED = 'blocked'
+}
 
 export interface IFollow {
-    followerId: Types.ObjectId;
-    followingId: Types.ObjectId;
+    followerId: Types.ObjectId; // the user who follows
+    followingId: Types.ObjectId; // the user being followed
     status: FOLLOW_STATUS;
     createdAt: Date;
 }

@@ -23,6 +23,10 @@ class CommentService {
                 authorId: ctx.userId,
             }], { session });
 
+            await Post.findByIdAndUpdate(ctx.postId, {
+                $inc: { commentsCount: 1 }
+            }, { session }).exec();
+
             if (data.parentCommentId) {
 
                 const parentComment = await Comment.findOneAndUpdate({
@@ -90,6 +94,7 @@ class CommentService {
             throw new ApiError(401, "Unauthorized: You can only delete your own comments");
         }
 
+        // TODO: add cron job to permanently delete comments that are soft deleted after 10 days & update post stats
         return withTransaction(async (session) => {
             // Soft delete the comment & replies
             await Comment.updateMany({
@@ -97,7 +102,6 @@ class CommentService {
                 isDeleted: false
             }, {
                 isDeleted: true,
-                deletedAt: new Date()
             }, { session }).exec();
 
             await Comment.updateOne({
@@ -105,7 +109,6 @@ class CommentService {
                 isDeleted: false
             }, {
                 isDeleted: true,
-                deletedAt: new Date()
             }, { session }).exec();
 
             return {
