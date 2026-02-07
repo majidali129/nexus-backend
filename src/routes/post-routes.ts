@@ -6,10 +6,12 @@ import { createPostSchema, updatedPostSchema } from "@/schemas/post";
 import { Router } from "express";
 import { commentRouter } from "./post-comment-routes";
 import { likeRouter } from "./like-routes";
+import { bookmarkRouter } from "./bookmark-routes";
 
 const router = Router()
 
 router.use('/:postId/comments', commentRouter)
+router.use('/:postId/bookmarks', bookmarkRouter)
 router.use('/:resourceId/likes', likeRouter);
 
 

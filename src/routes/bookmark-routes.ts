@@ -4,12 +4,12 @@ import { bookmarkPost, getAllBookmarks, removeBookmark } from "@/controllers/boo
 import { verifyJWT } from "@/middlewares/verify-jwt";
 import { Router } from "express";
 
-const router = Router()
+const router = Router({ mergeParams: true })
+// /posts/:postId/bookmarks
 
 router.use(verifyJWT);
-router.route('/').get(getAllBookmarks);
-router.route('/add').post(bookmarkPost);
-router.route('/:bookmarkId/remove').delete(removeBookmark);
+router.route('/').get(getAllBookmarks).put(bookmarkPost)
+router.route('/:bookmarkId').delete(removeBookmark);
 
-export { router as postBookmarkRouter };
+export { router as bookmarkRouter };
 export default router;

@@ -1,9 +1,5 @@
-
-
 import { ApiError } from "@/utils/api-error";
 import { Post } from "@/models/post-model";
-import { CreatePostInput, UpdatePostInput } from "@/schemas/post";
-import { PostContext } from "@/types/post";
 import { Types } from "mongoose";
 import { BookmarkContext } from "@/types/bookmark";
 import { Bookmark } from "@/models/bookmark-model";
@@ -11,6 +7,9 @@ import { withTransaction } from "@/utils/with-transaction";
 
 class BookmarkService {
     async bookmarkPost(ctx: BookmarkContext) {
+        if (!ctx.postId) {
+            throw new ApiError(400, 'Post ID is required');
+        }
         const isBookmarked = await Bookmark.exists({
             userId: new Types.ObjectId(ctx.userId),
             postId: new Types.ObjectId(ctx.postId!)

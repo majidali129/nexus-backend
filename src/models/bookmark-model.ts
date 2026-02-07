@@ -10,13 +10,13 @@ const bookmarkSchema = new Schema<BookmarkDocument>({
         type: Types.ObjectId,
         ref: "User",
         required: [true, "User ID is required"],
-        unique: true
+        index: true,
     },
     postId: {
         type: Types.ObjectId,
         ref: "Post",
         required: [true, "Post ID is required"],
-        unique: true
+        index: true
     }
 }, {
     timestamps: true

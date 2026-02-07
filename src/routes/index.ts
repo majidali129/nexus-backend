@@ -3,7 +3,7 @@ import { authRouter } from "./auth-routes";
 import { postRouter } from "./post-routes";
 import { commentRouter } from "./post-comment-routes";
 import { likeRouter } from "./like-routes";
-import { postBookmarkRouter } from "./post-bookmark-routes";
+import { bookmarkRouter } from "./bookmark-routes";
 import { notificationRouter } from "./notification-routes";
 import { storyRouter } from "./story-routes";
 import { accountRouter } from "./account-routes";
@@ -18,7 +18,7 @@ router.use('/auth', authRouter);
 router.use('/posts', postRouter)
 router.use('/comments', commentRouter);
 router.use('/likes', likeRouter);
-router.use('/bookmarks', postBookmarkRouter);
+router.use('/bookmarks', bookmarkRouter);
 router.use('/notification', notificationRouter);
 router.use('/stories', storyRouter);
 router.use('/accounts', accountRouter);
