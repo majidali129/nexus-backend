@@ -7,6 +7,7 @@ import { Router } from "express";
 import { commentRouter } from "./post-comment-routes";
 import { likeRouter } from "./like-routes";
 import { bookmarkRouter } from "./bookmark-routes";
+import { validateParams } from "@/middlewares/validate-params";
 
 const router = Router()
 
@@ -17,7 +18,8 @@ router.use('/:resourceId/likes', likeRouter);
 
 router.use(verifyJWT);
 router.route('/').post(validateBody(createPostSchema), createPost).get(getAllPosts);
-router.route('/:postId').patch(validateBody(updatedPostSchema), updatePost).get(getPostDetails).delete(deletePost);
+
+router.route('/:postId').patch(validateParams('postId', true), validateBody(updatedPostSchema), updatePost).get(validateParams('postId', true), getPostDetails).delete(validateParams('postId', true), deletePost);
 
 export { router as postRouter };
 export default router;

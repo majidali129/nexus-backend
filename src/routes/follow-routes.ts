@@ -1,4 +1,5 @@
 import { getAllFollowRequests, respondToFollowRequest, sendFollowRequest } from "@/controllers/follow-controller";
+import { validateParams } from "@/middlewares/validate-params";
 import { verifyJWT } from "@/middlewares/verify-jwt";
 import { Router } from "express";
 
@@ -10,11 +11,9 @@ const router = Router({ mergeParams: true }) // because we need to access :usern
 
 
 router.use(verifyJWT)
-router.put('/', sendFollowRequest);
-router.put('/:followReqId/respond', respondToFollowRequest);
+router.put('/', validateParams('username', false), sendFollowRequest);
+router.put('/:followReqId/respond', validateParams('followReqId', true), respondToFollowRequest);
 router.get('/follow-requests', getAllFollowRequests);
-
-
 
 export { router as followRouter }
 export default router
