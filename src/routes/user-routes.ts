@@ -1,16 +1,15 @@
-import { getUserProfile, respondToFollowRequest, sendFollowRequest } from "@/controllers/user-controller";
+import { getUserProfile } from "@/controllers/user-controller";
 import { verifyJWT } from "@/middlewares/verify-jwt";
 import { Router } from "express";
+import { followRouter } from "./follow-routes";
 
 
-const router = Router()
+const router = Router({ mergeParams: true })
+router.use('/:username/follow', followRouter) // delegate follow related routes to followRouter
 
 router.use(verifyJWT);
 
-router.get('/users/:username', getUserProfile);
-
-router.put('/users/:username/follow', sendFollowRequest);
-router.put('/users/:username/follow/respond/:followReqId', respondToFollowRequest);
+router.get('/:username/profile', getUserProfile);
 
 
 

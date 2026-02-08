@@ -8,6 +8,7 @@ import { notificationRouter } from "./notification-routes";
 import { storyRouter } from "./story-routes";
 import { accountRouter } from "./account-routes";
 import { userRouter } from "./user-routes";
+import { followRouter } from "./follow-routes";
 
 
 
@@ -23,6 +24,7 @@ router.use('/notification', notificationRouter);
 router.use('/stories', storyRouter);
 router.use('/accounts', accountRouter);
 router.use('/users', userRouter);
+router.use('/follow', followRouter)
 
 
 export { router as appRouter }
