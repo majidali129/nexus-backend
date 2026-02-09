@@ -16,3 +16,17 @@ export const getUserProfile = asyncHandler(async (req, res) => {
     const { status, message, profile } = await userService.getUserProfile(getCtx(req));
     return apiResponse(res, status, message, { profile });
 })
+
+export const updateProfile = asyncHandler(async (req, res) => {
+    const { status, message, profile } = await userService.updateProfile(getCtx(req), req.body);
+    return apiResponse(res, status, message, { profile });
+});
+
+export const uploadProfilePhoto = asyncHandler(async (req, res) => {
+    const { status, message, profilePhoto } = await userService.uploadProfilePhoto(getCtx(req), req.file!);
+    return apiResponse(res, status, message, { profilePhoto });
+});
+export const uploadCoverPhoto = asyncHandler(async (req, res) => {
+    const { status, message, coverPhoto } = await userService.uploadCoverPhoto(getCtx(req), req.file!);
+    return apiResponse(res, status, message, { coverPhoto });
+});

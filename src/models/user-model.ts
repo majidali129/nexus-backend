@@ -4,6 +4,17 @@ import mongoose, { HydratedDocument, Model, model, Schema } from "mongoose";
 
 type UserDocument = HydratedDocument<IUser>;
 
+const mediaSchema = new Schema({
+	url: {
+		type: String,
+		required: [true, 'Media URL is required'],
+	},
+	id: {
+		type: String,
+		required: [true, 'Media ID is required'],
+	},
+})
+
 const userSchema = new Schema<UserDocument>({
 	username: {
 		type: String,
@@ -44,11 +55,11 @@ const userSchema = new Schema<UserDocument>({
 		default: 'user'
 	},
 	profilePhoto: {
-		type: String,
+		type: mediaSchema,
 		default: null,
 	},
 	coverPhoto: {
-		type: String,
+		type: mediaSchema,
 		default: null,
 	},
 	bio: {

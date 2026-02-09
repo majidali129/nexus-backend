@@ -1,14 +1,19 @@
 export type USER_ROLE = 'admin' | 'user';
 export type ACCOUNT_STATUS = 'active' | 'banned'
 
+type Media = {
+    url: string;
+    id: string;
+}
+
 export interface IUser {
     username: string
     fullName: string;
     email: string;
     password: string;
     role: USER_ROLE;
-    profilePhoto?: string;
-    coverPhoto?: string;
+    profilePhoto?: Media;
+    coverPhoto?: Media;
     bio?: string;
     isPrivate: boolean;
     gender: 'male' | 'female' | 'other';

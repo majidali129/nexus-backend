@@ -5,6 +5,10 @@ import { POST_VISIBILITY } from "@/types/post";
 import { UserContext } from "@/types/user";
 import { FOLLOW_STATUS } from '@/types/follow'
 import { ApiError } from "@/utils/api-error";
+import { uploadToCloudinary } from "@/utils/upload-to-cloudinary";
+import fs from 'fs/promises'
+import { UpdateProfileInput } from "@/schemas/user";
+
 
 class UserService {
     async getUserProfile(ctx: UserContext) {
@@ -112,7 +116,78 @@ class UserService {
         }
     }
 
-    // Other user related services like update profile, deactivate account, update or add profile photo / cover photo, user settings ; blocking users, reporting users, searching users etc can be implemented here as the app scales and requires more user related features
+    async updateProfile(ctx: UserContext, profileData: UpdateProfileInput) {
+        const updatedProfile = await User.findByIdAndUpdate(ctx.currentUserId, {
+            $set: {
+                ...profileData,
+                updatedAt: new Date(),
+            }
+        }, { new: true }).exec();
+
+        return {
+            status: 200,
+            message: 'Profile updated successfully',
+            profile: updatedProfile,
+        }
+    }
+    async uploadProfilePhoto(ctx: UserContext, file: Express.Multer.File) {
+        if (!file) {
+            throw new ApiError(400, 'No file uploaded');
+        };
+
+        const result = await uploadToCloudinary(file.path, 'profilePhotos');
+        //TODO: do in background job and return response immediately to avoid blocking the event loop and improve performance
+        await fs.unlink(file.path); // user fs/promises to avoid blocking the event loop
+
+        await User.findByIdAndUpdate(ctx.currentUserId, {
+            $set: {
+                profilePhoto: {
+                    id: result.public_id.split('/').pop()!,
+                    url: result.secure_url,
+                }
+            }
+        }).exec();
+
+        return {
+            status: 200,
+            message: 'Profile photo uploaded successfully',
+            profilePhoto: {
+                id: result.public_id.split('/').pop()!,
+                url: result.secure_url,
+            }
+        }
+    }
+
+    async uploadCoverPhoto(ctx: UserContext, file: Express.Multer.File) {
+        if (!file) {
+            throw new ApiError(400, 'No file uploaded');
+        };
+
+        const result = await uploadToCloudinary(file.path, 'coverPhotos');
+
+        //TODO: do in background job and return response immediately to avoid blocking the event loop and improve performance
+        await fs.unlink(file.path);
+
+
+        await User.findByIdAndUpdate(ctx.currentUserId, {
+            $set: {
+                coverPhoto: {
+                    id: result.public_id.split('/').pop()!,
+                    url: result.secure_url,
+                }
+            }
+        }).exec();
+
+        return {
+            status: 200,
+            message: 'Cover photo uploaded successfully',
+            coverPhoto: {
+                id: result.public_id.split('/').pop()!,
+                url: result.secure_url,
+            }
+        }
+    }
+
 };
 
 export const userService = new UserService();

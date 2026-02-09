@@ -1,6 +1,7 @@
 import { config } from '@/config/env';
 import { ApiError } from '@/utils/api-error';
 import { Request, Response, NextFunction } from 'express';
+import { MulterError } from 'multer';
 import { ZodError } from 'zod';
 
 const formatErrors = (err: ZodError) => {
@@ -52,6 +53,23 @@ const handleDuplicateFieldError = (err: any) => {
     return new ApiError(400, message);
 }
 
+const handleMulterError = (err: MulterError) => {
+    if (err.code === 'LIMIT_FILE_SIZE') {
+        return new ApiError(400, 'File size is too large. Maximum limit is 2MB.');
+    }
+
+    if (err.code === 'LIMIT_FILE_COUNT') {
+        return new ApiError(400, 'File limit reached. Maximum 1 file is allowed.');
+    }
+
+    if (err.code === 'LIMIT_UNEXPECTED_FILE') {
+        return new ApiError(400, `Unexpected field name ${err.field} for the file upload. Use "profilePhoto" as the field name.`);
+    }
+
+
+    return new ApiError(400, err.message)
+}
+
 
 export const globalErrorHandler = (err: any, _req: Request, res: Response, _next: NextFunction) => {
     err.statusCode = err.statusCode || 500;
@@ -65,6 +83,11 @@ export const globalErrorHandler = (err: any, _req: Request, res: Response, _next
 
         if (err instanceof ZodError) {
             error = handleValidationError(err)
+        }
+
+
+        if (err instanceof MulterError) {
+            error = handleMulterError(err);
         }
         // mongoose duplicate key error
         if (err.code === 11000) {
