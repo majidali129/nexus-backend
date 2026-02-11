@@ -3,8 +3,12 @@ import z from "zod";
 
 export const createPostSchema = z.object({
     caption: z.string().min(1, "Caption can't be empty").max(2200, "Caption can't exceed 2200 characters").optional(),
-    media: z.url("Media must be a valid URL").refine(value => value !== '', {
-        message: "Media URL can't be empty",
+    media: z.object({
+        url: z.url("Media must be a valid URL").refine(value => value !== '', {
+            message: "Media URL can't be empty",
+        }),
+        id: z.string().min(1, "Media ID can't be empty"),
+
     }),
     type: z.enum(['image', 'video', 'text'], "Invalid post type. Choose from 'image', 'video', or 'text'."),
     visibility: z.enum(['public', 'private', 'friends'], "Invalid post visibility. Choose from 'public', 'private', or 'friends'.").optional(),

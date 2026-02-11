@@ -1,4 +1,5 @@
 import { Types } from "mongoose";
+import { USER_ROLE } from "./user";
 
 export enum NotificationType {
     LIKE = 'like',
@@ -16,11 +17,17 @@ export interface INotification {
     senderId: Types.ObjectId;
     type: NotificationType;
     content: string;
-    link: string;
-    entityType: 'post' | 'comment' | 'story' | 'message';
+    link?: string;
+    entityType: 'user' | 'post' | 'comment' | 'story' | 'message';
     entityId: Types.ObjectId;
     isRead: boolean;
     readAt?: Date;
     createdAt: Date;
     updatedAt: Date;
+}
+
+export interface NotificationContext {
+    currentUserId: Types.ObjectId;
+    currentUserRole: USER_ROLE;
+    notificationId?: Types.ObjectId;
 }

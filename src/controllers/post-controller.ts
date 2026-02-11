@@ -7,6 +7,7 @@ const getCtx = (req: Request): PostContext => {
     return {
         userId: req.user.id,
         role: req.user.role,
+        username: req.user.username,
         postId: req.params.postId as string
     }
 }
@@ -34,4 +35,14 @@ export const getPostDetails = asyncHandler(async (req, res) => {
 export const getAllPosts = asyncHandler(async (req, res) => {
     const { status, message, posts } = await postService.getAllPosts();
     return apiResponse(res, status, message, { posts });
+})
+
+export const togglePostLike = asyncHandler(async (req, res) => {
+    const { status, message } = await postService.togglePostLike(getCtx(req));
+    return apiResponse(res, status, message, null);
+})
+
+export const getPostLikes = asyncHandler(async (req, res) => {
+    const { status, message, likes } = await postService.getPostLikes(getCtx(req));
+    return apiResponse(res, status, message, { likes });
 })
